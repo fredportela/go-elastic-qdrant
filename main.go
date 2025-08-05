@@ -176,7 +176,9 @@ func (qc *QdrantClient) createCollection() error {
 }
 
 func (qc *QdrantClient) upsertDocument(doc DocumentData) error {
-
+	// Gerar embedding
+	embedding := generateEmbedding(doc.Texto)
+	
 	// Criar payload
 	payload := map[string]interface{}{
 		"texto":  doc.Texto,
@@ -185,13 +187,7 @@ func (qc *QdrantClient) upsertDocument(doc DocumentData) error {
 	// Criar ponto
 	point := &qdrant.PointStruct{
 		Id: qdrant.NewIDNum(doc.ID),
-		// Vectors: qdrant.NewVector(vectorSize, embedding),
-		Vectors: qdrant.NewVectorsMap(
-			map[string]*qdrant.Vector{
-				"text": qdrant.NewVectorSparse(
-					[]uint32{1, 3, 5, 7},
-					[]float32{0.1, 0.2, 0.3, 0.4}),
-			}),
+		Vectors: qdrant.NewVectors(embedding...),
 		Payload: qdrant.NewValueMap(payload),
 	}
 
@@ -281,3 +277,4 @@ func main() {
 	log.Printf("Total de documentos processados: %d", totalProcessados)
 	log.Printf("Total de erros: %d", erros)
 }
+
