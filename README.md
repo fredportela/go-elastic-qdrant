@@ -31,8 +31,8 @@ Este projeto em Go realiza a exportação de documentos do Elasticsearch para o 
 Clone este repositório:
 
 ```bash
-git clone https://github.com/seuusuario/elasticsearch-to-qdrant.git
-cd elasticsearch-to-qdrant
+git clone https://github.com/fredportela/go-elastic-qdrant
+cd go-elastic-qdrant
 ```
 
 Instale as dependências:
